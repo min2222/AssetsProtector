@@ -3,6 +3,7 @@
 
 Usage :
 create folder named "aes" in your minecraft folder (run folder in development environmental)
+
 put png files that you want to encrypt.
 
 use below code with FMLClientSetupEvent to encrypt files
