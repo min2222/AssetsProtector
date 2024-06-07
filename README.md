@@ -1,6 +1,8 @@
 # AssetsProtector
  a minecraft mod for protect your assets
 
+compatible with resourcepack
+
 Usage :
 create folder named "aes" in your minecraft folder (run folder in development environmental)
 
@@ -22,6 +24,5 @@ catch (InvalidKeyException | NoSuchAlgorithmException | IllegalBlockSizeExceptio
 put encrypted files to your assets folder (make sure change .pngencrypted to .png)
 
 use AESUtil#getTexture to load texture
-
 
 
