@@ -21,7 +21,7 @@ catch (InvalidKeyException | NoSuchAlgorithmException | IllegalBlockSizeExceptio
 }
 ```
 
-put encrypted files to your assets folder (make sure change .pngencrypted to .png)
+put encrypted files to your assets folder
 
 use AESUtil#getTexture to load texture
 
