@@ -1,6 +1,5 @@
 package com.min01.aes;
 
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -78,28 +77,26 @@ public class AESUtil
 	    return new IvParameterSpec(iv);
 	}
 	
-	public static SecretKey decryptKey(byte[] array, String algorithm, String salt, IvParameterSpec ivParameterSpec) throws InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, BadPaddingException, IllegalBlockSizeException, InvalidKeySpecException, IOException
+	public static SecretKey decryptKey(byte[] array, String algorithm, IvParameterSpec ivParameterSpec) throws InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, BadPaddingException, IllegalBlockSizeException, InvalidKeySpecException, IOException
 	{
 		String string = new String(Arrays.copyOfRange(array, array.length - 16, array.length));
-		SecretKey key = getKey(string, salt);
+		SecretKey key = getKey(string, string);
 	    String encrypted = new String(Arrays.copyOfRange(array, array.length - 60, array.length - 16));
 		String decrypted = decryptString(algorithm, encrypted, key, ivParameterSpec);
-		return getKey(decrypted, salt);
+		return getKey(decrypted, string);
 	}
 	
 	public static ByteArrayInputStream decryptTexture(byte[] array) throws NoSuchAlgorithmException, IOException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, InvalidAlgorithmParameterException, NoSuchPaddingException, InvalidKeySpecException
 	{
 	    String algorithm = "AES/CBC/PKCS5Padding";
-	    String salt = "329769769734689";
 	    IvParameterSpec ivParameterSpec = generateIv();
-	    SecretKey key = decryptKey(array, algorithm, salt, ivParameterSpec);
+	    SecretKey key = decryptKey(array, algorithm, ivParameterSpec);
 	    return decryptFile(algorithm, key, ivParameterSpec, array);
 	}
 	
 	public static void encryptTextures() throws NoSuchAlgorithmException, IOException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, InvalidAlgorithmParameterException, NoSuchPaddingException, InvalidKeySpecException
 	{
 	    String algorithm = "AES/CBC/PKCS5Padding";
-	    String salt = "329769769734689";
 	    IvParameterSpec ivParameterSpec = generateIv();
 	    File directory = makeDirectory("aes");
 	    File [] files = directory.listFiles(new FileFilter() 
@@ -115,10 +112,10 @@ public class AESUtil
 		    File inputFile = new File(directory, files[i].getName().toLowerCase());
 		    File encryptedFile = new File(directory, files[i].getName().toLowerCase() + "encrypted");
 		    String randomString = generateRandomString();
-		    SecretKey key = getKey(randomString, salt);
+		    SecretKey key = getKey(randomString, randomString);
 		    String encrypted = encryptString(algorithm, generateRandomString(), key, ivParameterSpec);
 			String decrypted = decryptString(algorithm, encrypted, key, ivParameterSpec);
-		    encryptFile(algorithm, getKey(decrypted, salt), ivParameterSpec, inputFile, encryptedFile, encrypted, randomString);
+		    encryptFile(algorithm, getKey(decrypted, randomString), ivParameterSpec, inputFile, encryptedFile, encrypted, randomString);
 	    }
 	}
 	
