@@ -8,7 +8,7 @@ create folder named "aes" in your minecraft folder (run folder in development en
 
 put png files that you want to encrypt.
 
-use below code with FMLClientSetupEvent to encrypt files
+use below code with FMLClientSetupEvent to encrypt files (make sure remove code when publishing mod)
 
 ```
 try
