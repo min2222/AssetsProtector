@@ -52,17 +52,18 @@ public class AESUtil
 		AbstractTexture abstracttexture = textureManager.getTexture(p_172522_, MissingTextureAtlasSprite.getTexture());
 		if(abstracttexture == MissingTextureAtlasSprite.getTexture()) 
 		{
-			AbstractTexture texture = new AESTexture((File)null, p_172522_);
-			textureManager.register(p_172522_, texture);
+
 		}
+		AbstractTexture texture = new AESTexture((File)null, p_172522_);
+		textureManager.register(p_172522_, texture);
 	}
 	
-	public static String generateRandomString()
+	private static String generateRandomString()
 	{
 		return RandomStringUtils.random(16, true, true);
 	}
 	
-	public static SecretKey getKey(String password, String salt) throws NoSuchAlgorithmException, InvalidKeySpecException 
+	private static SecretKey getKey(String password, String salt) throws NoSuchAlgorithmException, InvalidKeySpecException 
 	{
 		SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
 		KeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), 65536, 256);
@@ -70,14 +71,14 @@ public class AESUtil
 		return secret;
 	}
 	
-	public static IvParameterSpec generateIv() 
+	private static IvParameterSpec generateIv() 
 	{
 	    byte[] iv = new byte[16];
 	    //new SecureRandom().nextBytes(iv);
 	    return new IvParameterSpec(iv);
 	}
 	
-	public static SecretKey decryptKey(byte[] array, String algorithm, IvParameterSpec ivParameterSpec) throws InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, BadPaddingException, IllegalBlockSizeException, InvalidKeySpecException, IOException
+	private static SecretKey decryptKey(byte[] array, String algorithm, IvParameterSpec ivParameterSpec) throws InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, BadPaddingException, IllegalBlockSizeException, InvalidKeySpecException, IOException
 	{
 		String string = new String(Arrays.copyOfRange(array, array.length - 16, array.length));
 		SecretKey key = getKey(string, string);
@@ -119,7 +120,7 @@ public class AESUtil
 	    }
 	}
 	
-	public static File makeDirectory(String folderName)
+	private static File makeDirectory(String folderName)
 	{
 		Minecraft mc = Minecraft.getInstance();
 		File cacheDirectory = new File(mc.gameDirectory.getPath() + "/" + folderName);
@@ -130,7 +131,7 @@ public class AESUtil
 		return cacheDirectory;
 	}
 	
-	public static String encryptString(String algorithm, String input, SecretKey key, IvParameterSpec iv) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException 
+	private static String encryptString(String algorithm, String input, SecretKey key, IvParameterSpec iv) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException 
 	{	
 		Cipher cipher = Cipher.getInstance(algorithm);
 		cipher.init(Cipher.ENCRYPT_MODE, key, iv);
@@ -138,7 +139,7 @@ public class AESUtil
 		return Base64.getEncoder().encodeToString(cipherText);
 	}
 	
-	public static String decryptString(String algorithm, String cipherText, SecretKey key, IvParameterSpec iv) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException 
+	private static String decryptString(String algorithm, String cipherText, SecretKey key, IvParameterSpec iv) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException 
 	{
 		Cipher cipher = Cipher.getInstance(algorithm);
 		cipher.init(Cipher.DECRYPT_MODE, key, iv);
@@ -146,7 +147,7 @@ public class AESUtil
 		return new String(plainText);
 	}
 	
-	public static ByteArrayInputStream decryptFile(String algorithm, SecretKey key, IvParameterSpec iv, byte[] array) throws IOException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException
+	private static ByteArrayInputStream decryptFile(String algorithm, SecretKey key, IvParameterSpec iv, byte[] array) throws IOException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException
 	{
 	    Cipher cipher = Cipher.getInstance(algorithm);
 	    cipher.init(Cipher.DECRYPT_MODE, key, iv);
@@ -171,7 +172,7 @@ public class AESUtil
 	    return new ByteArrayInputStream(outputStream.toByteArray());
 	}
 	
-	public static void encryptFile(String algorithm, SecretKey key, IvParameterSpec iv, File inputFile, File outputFile, String encrypted, String string) throws IOException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException
+	private static void encryptFile(String algorithm, SecretKey key, IvParameterSpec iv, File inputFile, File outputFile, String encrypted, String string) throws IOException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException
 	{
 		Cipher cipher = Cipher.getInstance(algorithm);
 		cipher.init(Cipher.ENCRYPT_MODE, key, iv);
