@@ -46,16 +46,15 @@ public class AESUtil
 		return texture;
 	}
 	
-	private static void registerTexture(ResourceLocation p_172522_) 
+	public static void registerTexture(ResourceLocation p_172522_) 
 	{
 		TextureManager textureManager = Minecraft.getInstance().getTextureManager();
 		AbstractTexture abstracttexture = textureManager.getTexture(p_172522_, MissingTextureAtlasSprite.getTexture());
 		if(abstracttexture == MissingTextureAtlasSprite.getTexture()) 
 		{
-
+			AbstractTexture texture = new AESTexture((File)null, p_172522_);
+			textureManager.register(p_172522_, texture);
 		}
-		AbstractTexture texture = new AESTexture((File)null, p_172522_);
-		textureManager.register(p_172522_, texture);
 	}
 	
 	private static String generateRandomString()
