@@ -25,4 +25,6 @@ put encrypted files to your assets folder (make sure change .pngencrypted to .pn
 
 use AESUtil#getTexture to load texture
 
+if texture is loaded from json (like item, block, particle) you don't need to do additional stuff, just put encrypted texture in assets folder
+
 
