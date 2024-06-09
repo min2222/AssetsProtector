@@ -31,9 +31,9 @@ public class MixinTextureAtlas
 		return inputStream;
 	}
 	
-	//lambda$getBasicSpriteInfos$2
-	//m_174717_
-	@Redirect(method = "lambda$getBasicSpriteInfos$2", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/packs/resources/Resource;open()Ljava/io/InputStream;"))
+	//lambda$getBasicSpriteInfos$2 for dev environmental;
+	//m_174717_ for compiling;
+	@Redirect(method = "m_174717_", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/packs/resources/Resource;open()Ljava/io/InputStream;"))
 	private InputStream getBasicSpriteInfos(Resource instance) throws IOException, InvalidKeyException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, NoSuchPaddingException, InvalidKeySpecException
 	{
         InputStream inputStream = ImageIO.read(instance.open()) != null ? instance.open() : AESUtil.decryptTexture(instance.open().readAllBytes());
