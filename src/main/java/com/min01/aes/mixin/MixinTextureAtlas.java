@@ -24,6 +24,13 @@ import net.minecraft.server.packs.resources.Resource;
 @Mixin(TextureAtlas.class)
 public class MixinTextureAtlas
 {
+	@Redirect(method = "load(Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/client/renderer/texture/TextureAtlasSprite$Info;IIIII)Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/packs/resources/Resource;open()Ljava/io/InputStream;"))
+	private InputStream load(Resource instance) throws IOException, InvalidKeyException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, NoSuchPaddingException, InvalidKeySpecException
+	{
+        InputStream inputStream = ImageIO.read(instance.open()) != null ? instance.open() : AESUtil.decryptTexture(instance.open().readAllBytes());
+		return inputStream;
+	}
+	
 	//lambda$getBasicSpriteInfos$2
 	//m_174717_
 	@Redirect(method = "lambda$getBasicSpriteInfos$2", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/packs/resources/Resource;open()Ljava/io/InputStream;"))
