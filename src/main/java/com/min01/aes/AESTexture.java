@@ -104,7 +104,7 @@ public class AESTexture extends SimpleTexture
 			try 
 			{
 		        Resource resource = Minecraft.getInstance().getResourceManager().getResourceOrThrow(this.location);
-		        InputStream inputStream = ImageIO.read(resource.open()) != null ? resource.open() : AESUtil.decryptTexture(resource.open().readAllBytes());
+		        InputStream inputStream = ImageIO.read(resource.open()) != null ? resource.open() : AESUtil.decrypt(resource.open().readAllBytes());
 				try
 				{
 					NativeImage nativeimage = this.process(NativeImage.read(inputStream));
