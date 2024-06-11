@@ -30,7 +30,7 @@ public class MixinSpriteLoader
 	private static InputStream loadSprite(Resource instance) throws IOException, InvalidKeyException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, NoSuchPaddingException, InvalidKeySpecException
 	{
 		byte[] array = instance.open().readAllBytes();
-        InputStream inputStream = ImageIO.read(instance.open()) != null ? instance.open() : Base64.isBase64(Arrays.copyOfRange(array, array.length - 60, array.length - 16)) ? AESUtil.decryptTexture(array) : instance.open();
+        InputStream inputStream = ImageIO.read(instance.open()) != null ? instance.open() : Base64.isBase64(Arrays.copyOfRange(array, array.length - 60, array.length - 16)) ? AESUtil.decrypt(array) : instance.open();
         return inputStream;
 	}
 }

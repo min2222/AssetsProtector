@@ -86,7 +86,7 @@ public class AESUtil
 		return getKey(decrypted, string);
 	}
 	
-	public static ByteArrayInputStream decryptTexture(byte[] array) throws NoSuchAlgorithmException, IOException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, InvalidAlgorithmParameterException, NoSuchPaddingException, InvalidKeySpecException
+	public static ByteArrayInputStream decrypt(byte[] array) throws NoSuchAlgorithmException, IOException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, InvalidAlgorithmParameterException, NoSuchPaddingException, InvalidKeySpecException
 	{
 	    String algorithm = "AES/CBC/PKCS5Padding";
 	    IvParameterSpec ivParameterSpec = generateIv();
@@ -94,7 +94,7 @@ public class AESUtil
 	    return decryptFile(algorithm, key, ivParameterSpec, array);
 	}
 	
-	public static void encryptTextures() throws NoSuchAlgorithmException, IOException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, InvalidAlgorithmParameterException, NoSuchPaddingException, InvalidKeySpecException
+	public static void encryptFiles(String fileExtension) throws NoSuchAlgorithmException, IOException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, InvalidAlgorithmParameterException, NoSuchPaddingException, InvalidKeySpecException
 	{
 	    String algorithm = "AES/CBC/PKCS5Padding";
 	    IvParameterSpec ivParameterSpec = generateIv();
@@ -104,7 +104,7 @@ public class AESUtil
 	    	@Override
 	        public boolean accept(File file) 
 	        {
-	            return file.isFile() && file.getName().toLowerCase().endsWith(".png");
+	            return file.isFile() && file.getName().toLowerCase().endsWith(fileExtension);
 	        }
 	    });
 	    for(int i = 0; i < files.length; i++)
