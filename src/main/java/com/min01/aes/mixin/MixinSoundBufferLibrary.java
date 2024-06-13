@@ -29,7 +29,7 @@ public class MixinSoundBufferLibrary
 	//lambda$getCompleteBuffer$0 for dev environmental;
 	//m_174980_ for compiling;
 	
-	@Redirect(method = "lambda$getCompleteBuffer$0", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/packs/resources/ResourceProvider;open(Lnet/minecraft/resources/ResourceLocation;)Ljava/io/InputStream;"))
+	@Redirect(method = "m_174980_", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/packs/resources/ResourceProvider;open(Lnet/minecraft/resources/ResourceLocation;)Ljava/io/InputStream;"))
 	private InputStream getCompleteBuffer(ResourceProvider instance, ResourceLocation p_215596_) throws IOException, InvalidKeyException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, NoSuchPaddingException, InvalidKeySpecException
 	{
 		byte[] array = instance.open(p_215596_).readAllBytes();
