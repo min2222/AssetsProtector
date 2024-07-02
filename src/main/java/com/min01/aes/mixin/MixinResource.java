@@ -22,8 +22,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.min01.aes.AESUtil;
 
-import net.minecraft.server.packs.resources.IoSupplier;
 import net.minecraft.server.packs.resources.Resource;
+import net.minecraft.server.packs.resources.Resource.IoSupplier;
 
 @Mixin(Resource.class)
 public class MixinResource 
