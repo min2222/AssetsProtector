@@ -36,17 +36,21 @@ public class MixinResource
 	private void open(CallbackInfoReturnable<InputStream> cir) throws IOException
 	{
 		byte[] array = this.streamSupplier.get().readAllBytes();
-		if(array.length > 60)
+		if(array.length - 60 > 0)
 		{
-			if(Base64.isBase64(Arrays.copyOfRange(array, array.length - 60, array.length - 16)))
+			byte[] copy = Arrays.copyOfRange(array, array.length - 60, array.length - 16);
+			if(copy.length > 0)
 			{
-				try
+				if(Base64.isBase64(copy))
 				{
-					cir.setReturnValue(AESUtil.decrypt(array));
-				}
-				catch(InvalidKeyException | NoSuchAlgorithmException | IllegalBlockSizeException | BadPaddingException | InvalidAlgorithmParameterException | NoSuchPaddingException | InvalidKeySpecException | IOException e) 
-				{
-					e.printStackTrace();
+					try
+					{
+						cir.setReturnValue(AESUtil.decrypt(array));
+					}
+					catch(InvalidKeyException | NoSuchAlgorithmException | IllegalBlockSizeException | BadPaddingException | InvalidAlgorithmParameterException | NoSuchPaddingException | InvalidKeySpecException | IOException e) 
+					{
+						e.printStackTrace();
+					}
 				}
 			}
 		}
