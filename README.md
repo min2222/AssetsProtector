@@ -23,9 +23,7 @@ catch (InvalidKeyException | NoSuchAlgorithmException | IllegalBlockSizeExceptio
 
 put encrypted files to your assets folder (make sure change .pngencrypted to .png)
 
-use AESUtil#getTexture to load texture
-
-if texture is loaded from json (like item, block, particle) you don't need to do additional stuff, just put encrypted texture in assets folder
+then everything should be done, you don't need to do additional stuff
 
 for sounds :
 AESUtil.encryptFiles(".ogg");
