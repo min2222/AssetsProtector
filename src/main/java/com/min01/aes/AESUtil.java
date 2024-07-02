@@ -28,10 +28,6 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.AbstractTexture;
-import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -39,24 +35,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class AESUtil
 {
 	//https://www.baeldung.com/java-aes-encryption-decryption
-	
-	public static ResourceLocation getTexture(ResourceLocation texture)
-	{
-		registerTexture(texture);
-		return texture;
-	}
-	
-	public static void registerTexture(ResourceLocation p_172522_) 
-	{
-		TextureManager textureManager = Minecraft.getInstance().getTextureManager();
-		AbstractTexture abstracttexture = textureManager.getTexture(p_172522_, MissingTextureAtlasSprite.getTexture());
-		if(abstracttexture == MissingTextureAtlasSprite.getTexture()) 
-		{
-			AbstractTexture texture = new AESTexture((File)null, p_172522_);
-			textureManager.register(p_172522_, texture);
-		}
-	}
-	
+
 	private static String generateRandomString()
 	{
 		return RandomStringUtils.random(16, true, true);

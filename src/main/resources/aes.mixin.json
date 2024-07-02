@@ -3,11 +3,10 @@
 	"minVersion": "0.8",
 	"package": "com.min01.aes.mixin",
 	"compatibilityLevel": "JAVA_17",
-	"mixins": [],
-	"client": [
-		"MixinTextureAtlas",
-		"MixinSoundBufferLibrary"
+	"mixins": [
+		"MixinResource"
 	],
+	"client": [],
 	"server": [],
 	"injectors": {
 		"defaultRequire": 1
