@@ -31,7 +31,7 @@ public class MixinResource
 	@Shadow
 	@Final
 	private IoSupplier<InputStream> streamSupplier;
-	   
+	
 	@Inject(at = @At("HEAD"), method = "open", cancellable = true)
 	private void open(CallbackInfoReturnable<InputStream> cir) throws IOException
 	{
@@ -40,7 +40,7 @@ public class MixinResource
 		{
 			if(Base64.isBase64(Arrays.copyOfRange(array, array.length - 60, array.length - 16)))
 			{
-				try 
+				try
 				{
 					cir.setReturnValue(AESUtil.decrypt(array));
 				}
