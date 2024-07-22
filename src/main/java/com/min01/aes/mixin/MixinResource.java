@@ -32,26 +32,23 @@ public class MixinResource
 	@Final
 	private IoSupplier<InputStream> streamSupplier;
 	
-	@Inject(at = @At("HEAD"), method = "open", cancellable = true)
+	@Inject(at = @At("RETURN"), method = "open", cancellable = true)
 	private void open(CallbackInfoReturnable<InputStream> cir) throws IOException
 	{
 		byte[] array = this.streamSupplier.get().readAllBytes();
-		if(array.length - 60 > 0)
+		if(array.length > 60)
 		{
-			byte[] copy = Arrays.copyOfRange(array, array.length - 60, array.length - 16);
-			if(copy.length > 0)
+			byte[] copy = ArrayUtils.subarray(array, array.length - 61, array.length - 17);
+		    Pattern pattern = Pattern.compile("^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$");
+			if(pattern.matcher(new String(copy)).matches())
 			{
-			    Pattern pattern = Pattern.compile("^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$");
-				if(pattern.matcher(new String(copy)).matches())
+				try
 				{
-					try
-					{
-						cir.setReturnValue(AESUtil.decrypt(array));
-					}
-					catch(InvalidKeyException | NoSuchAlgorithmException | IllegalBlockSizeException | BadPaddingException | InvalidAlgorithmParameterException | NoSuchPaddingException | InvalidKeySpecException | IOException e) 
-					{
-						e.printStackTrace();
-					}
+					cir.setReturnValue(AESUtil.decrypt(array));
+				}
+				catch(InvalidKeyException | NoSuchAlgorithmException | IllegalBlockSizeException | BadPaddingException | InvalidAlgorithmParameterException | NoSuchPaddingException | InvalidKeySpecException | IOException e) 
+				{
+					e.printStackTrace();
 				}
 			}
 		}
