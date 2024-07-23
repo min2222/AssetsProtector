@@ -38,7 +38,7 @@ public class MixinResource
 		byte[] array = this.streamSupplier.get().readAllBytes();
 		if(array.length > 60)
 		{
-			byte[] copy = ArrayUtils.subarray(array, array.length - 61, array.length - 17);
+			byte[] copy = ArrayUtils.subarray(array, array.length - 60, array.length - 16);
 		    Pattern pattern = Pattern.compile("^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$");
 			if(pattern.matcher(new String(copy)).matches())
 			{
