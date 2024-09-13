@@ -30,4 +30,5 @@ AESUtil.encryptFiles(".ogg");
 .oggencrypted -> .ogg
 
 ![image](https://github.com/user-attachments/assets/4171449b-9b5f-4e1b-a902-39af7c77b146)
+
 this is not a true, it's not something like disable encryption when resourcepack is enabled, you can just encrypt texture inside resourcepack itself so don't need to worry about it
