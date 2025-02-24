@@ -89,7 +89,7 @@ public class AESUtil
 	    for(int i = 0; i < files.length; i++)
 	    {
 		    File inputFile = new File(directory, files[i].getName().toLowerCase());
-		    File encryptedFile = new File(directory, files[i].getName().toLowerCase() + "aes");
+		    File encryptedFile = new File(directory, files[i].getName().toLowerCase() + ".encrypted");
 		    String randomString = generateRandomString();
 		    SecretKey key = getKey(randomString, randomString);
 		    String encrypted = encryptString(algorithm, generateRandomString(), key, ivParameterSpec);
