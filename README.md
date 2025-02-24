@@ -20,8 +20,7 @@ catch (InvalidKeyException | NoSuchAlgorithmException | IllegalBlockSizeExceptio
     e.printStackTrace();
 }
 ```
-
-put encrypted files to your assets folder
+remove "aes" from file name and put encrypted files to your assets folder
 
 then everything should be done, you don't need to do additional stuff
 
