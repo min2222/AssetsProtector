@@ -40,16 +40,16 @@ public class MixinResource
 		{
 			byte[] copy = ArrayUtils.subarray(array, array.length - 60, array.length - 16);
 		    Pattern pattern = Pattern.compile("^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$");
-			if(pattern.matcher(new String(copy)).matches())
+			try
 			{
-				try
+				if(pattern.matcher(new String(copy)).matches())
 				{
 					cir.setReturnValue(AESUtil.decrypt(array));
 				}
-				catch(InvalidKeyException | NoSuchAlgorithmException | IllegalBlockSizeException | BadPaddingException | InvalidAlgorithmParameterException | NoSuchPaddingException | InvalidKeySpecException | IOException e) 
-				{
-					e.printStackTrace();
-				}
+			}
+			catch(InvalidKeyException | NoSuchAlgorithmException | IllegalBlockSizeException | BadPaddingException | InvalidAlgorithmParameterException | NoSuchPaddingException | InvalidKeySpecException | IOException e) 
+			{
+				
 			}
 		}
 	}
