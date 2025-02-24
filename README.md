@@ -21,10 +21,9 @@ catch (InvalidKeyException | NoSuchAlgorithmException | IllegalBlockSizeExceptio
 }
 ```
 
-put encrypted files to your assets folder (make sure change .pngencrypted to .png)
+put encrypted files to your assets folder
 
 then everything should be done, you don't need to do additional stuff
 
 for sounds :
 AESUtil.encryptFiles(".ogg");
-.oggencrypted -> .ogg
