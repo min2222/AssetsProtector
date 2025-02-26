@@ -1,5 +1,6 @@
 package com.min01.aes.mixin;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.InvalidAlgorithmParameterException;
@@ -35,22 +36,25 @@ public class MixinResource
 	@Inject(at = @At("RETURN"), method = "open", cancellable = true)
 	private void open(CallbackInfoReturnable<InputStream> cir) throws IOException
 	{
-		byte[] array = this.streamSupplier.get().readAllBytes();
-		if(array.length > 60)
+		InputStream stream = cir.getReturnValue();
+		byte[] array = stream.readAllBytes();
+		if(array.length > 76)
 		{
-			byte[] copy = ArrayUtils.subarray(array, array.length - 60, array.length - 16);
-		    Pattern pattern = Pattern.compile("^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$");
 			try
 			{
+				byte[] copy = ArrayUtils.subarray(array, array.length - 60, array.length - 16);
+			    Pattern pattern = Pattern.compile("^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$");
 				if(pattern.matcher(new String(copy)).matches())
 				{
 					cir.setReturnValue(AESUtil.decrypt(array));
+					return;
 				}
 			}
-			catch(InvalidKeyException | NoSuchAlgorithmException | IllegalBlockSizeException | BadPaddingException | InvalidAlgorithmParameterException | NoSuchPaddingException | InvalidKeySpecException | IOException e) 
+			catch (Exception e) 
 			{
 				
 			}
 		}
+	    cir.setReturnValue(new ByteArrayInputStream(array));
 	}
 }
